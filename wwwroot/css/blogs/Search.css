@@ -1,0 +1,22 @@
+@import url("../profile/_PreviewBlogItem.css");
+@import url("../paginator.css");
+
+.search_title {
+    padding: 1rem 0 .5rem;
+    color: var(--primary);
+    border-bottom: 5px double #2cccff;
+    font-family: "playfair display", sans-serif;
+}
+
+.search_result {
+    margin-block: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    
+    gap: .75rem;
+}
+
+.text_notfound {
+    color: var(--red);
+    margin: auto;
+}

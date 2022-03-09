@@ -1,0 +1,8 @@
+@model Topic
+
+<div class="topic_item">
+    <div class="topic">@Model.Name</div>
+    <a asp-controller="Blogs" asp-action="Index" asp-route-topic_id="@Model.Id" class="topic_item_link">
+        <img src="@Model.ImageURL" alt="@Model.Name">
+    </a>
+</div>

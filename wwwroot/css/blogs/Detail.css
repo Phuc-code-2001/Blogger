@@ -1,0 +1,27 @@
+
+
+.d_container {
+    padding: 1rem 1.5vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.d_container > * {
+    margin: auto;
+}
+
+.d_control {
+    flex: 1;
+    max-width: min(100%, 940px);
+    display: flex;
+    justify-content: space-between;
+    gap: 1.2rem;
+}
+
+.d_control a {
+    min-width: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

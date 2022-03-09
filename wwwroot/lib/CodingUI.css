@@ -1,0 +1,163 @@
+/* Coding UI CSS */
+
+/* Text-field */
+
+/* Login form */
+.text-field_login {
+	position: relative;
+}
+
+.text-field_login label {
+	display: inline-block;
+	color: #333;
+	font-weight: 600;
+	cursor: pointer;
+	position: absolute;
+	top: 0;
+	left: 10px;
+	background-color: white;
+	padding: 1px 5px;
+	font-size: 12px;
+	transform: translateY(-50%);
+	color: #6a5af9;
+}
+
+.text-field_login .form_control {
+	padding: 12px 15px;
+	display: block;
+	width: 100%;
+	color: #999;
+	background-color: #fff;
+	font-size: 14px;
+	border: 1px solid #6a5af9;
+	border-radius: 4px;
+}
+
+/* Register form */
+.text-field_register {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 10px;
+}
+.text-field_register label {
+	display: inline-block;
+	color: var(--secondary);
+	font-weight: 600;
+	cursor: pointer;
+	margin-bottom: 0;
+}
+
+.text-field_register .form_control {
+	display: block;
+	width: 100%;
+	padding: 10px 0;
+	color: #999;
+	background-color: #fff;
+	font-size: 14px;
+	border: none;
+	outline: none;
+	border-bottom: 1px solid #6a5af9;
+}
+
+/* Label field */
+
+.label-item {
+    display: block;
+    margin: .5rem 0;
+	color: white;
+	border-radius: 4px;
+	font-size: 1rem;
+	font-weight: bold;
+	background-color: #333;
+}
+
+.label-item.success {
+	background-color: #07a787;
+}
+.label-item.info {
+	background-color: #00aefd;
+}
+.label-item.danger {
+	background-color: #ff7870;
+}
+.label-item.warning {
+	background-color: #ffa400;
+}
+
+/* Tabs menu */
+
+.tabs1 {
+	display: flex;
+	border-bottom: 2px solid #999;
+}
+.tabs1 .tab-item {
+	white-space: nowrap;
+	padding: .5rem 1rem;
+	font-size: 16px;
+	cursor: pointer;
+	color: #999;
+	font-weight: 500;
+	border-radius: 5px 5px 0 0;
+}
+
+.tabs1 .tab-item:hover:not(.active) {
+	background-color: #f8f8f8;
+}
+
+.tabs1 .tab-item.active {
+	border: 1px solid #999;
+	border-bottom: none;
+	box-shadow: 0 0 1px 1px #999;
+	position: relative;
+}
+
+.tabs1 .tab-item.active:after {
+	content: "";
+	height: 5px;
+	width: 100%;
+	background-color: #fff;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	transform: translateY(50%);
+}
+
+/* Subcribe input */
+
+.subscribe-form {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	position: relative;
+}
+.subscribe-form-input {
+	flex: 1;
+	width: 100%;
+	outline: none;
+	padding: 15px 10px;
+	border: 1px solid #eee;
+	border-radius: 4px;
+	transition: all 0.2s linear;
+}
+.subscribe-form-input:focus {
+	border-color: var(--purple);
+}
+.subscribe-form-input:focus + .subscribe-form-button {
+	background-color: var(--purple);
+}
+.subscribe-form-button {
+	padding: 5px 15px;
+	background-color: #999;
+	color: white;
+	outline: none;
+	cursor: pointer;
+	font-weight: 500;
+	border-radius: 4px;
+	flex-shrink: 0;
+	transition: all 0.2s linear;
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	transform: translateY(-50%);
+}

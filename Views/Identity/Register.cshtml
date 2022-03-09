@@ -1,0 +1,78 @@
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@{
+    ViewData["Title"] = "Register";
+    bool data_ok = true;
+}
+
+@model RegisterViewModel
+
+<link rel="stylesheet" href="~/css/home/Login.css">
+<link rel="stylesheet" href="~/lib/CodingUI.css">
+
+@* Use login template *@
+<section class="login">
+    <form method="POST" class="login_form">
+        <h2 class="form_title">Register</h2>
+        <hr>
+        @if (ViewData.ContainsKey("DataValidators"))
+        {
+            <div style="font-family: 'Times New Roman', Times, serif;">
+                @foreach (String message in (List<String>) ViewData["DataValidators"]) {
+                    <b class="text-danger">*@message</b> <br>
+                    data_ok = false;
+                }
+                @if(!data_ok) { <hr> }
+            </div>
+        }
+        <div class="text-field_register">
+            <label asp-for="Fullname">Fullname</label>
+            <input type="text" asp-for="Fullname" class="form_control" placeholder="Enter your fullname">
+            <span asp-validation-for="Fullname" class="label-item danger"></span>
+        </div>
+        <div class="text-field_register">
+            <label for="">Gender</label>
+            <select asp-for="Gender" class="form_control">
+                <option value="1">Male</option>
+                <option value="0">Female</option>
+            </select>
+            <span asp-validation-for="Gender" class="label-item danger"></span>
+        </div>
+        <div class="text-field_register">
+            <label asp-for="Birthday">Birthday</label>
+            <input type="date" asp-for="Birthday" class="form_control" required>
+            <span asp-validation-for="Birthday" class="label-item danger"></span>
+        </div>
+        <div class="text-field_register">
+            <label asp-for="UserName">Username</label>
+            <input type="text" asp-for="UserName" class="form_control" placeholder="Enter your username">
+            <span asp-validation-for="UserName" class="label-item danger"></span>
+        </div>
+        <div class="text-field_register">
+            <label asp-for="Email">Email</label>
+            <input type="email" asp-for="Email" class="form_control" placeholder="Enter your email">
+            <span asp-validation-for="Email" class="label-item danger"></span>
+        </div>
+        <div class="text-field_register">
+            <label asp-for="Password">Password</label>
+            <input type="password" asp-for="Password" class="form_control" placeholder="Enter your password">
+            <span asp-validation-for="Password" class="label-item danger"></span>
+        </div>
+        <div class="text-field_register">
+            <label asp-for="ConfirmPassword">Confirm Password</label>
+            <input type="password" asp-for="ConfirmPassword" class="form_control">
+            <span asp-validation-for="ConfirmPassword" class="label-item danger"></span>
+        </div>
+        <div class="form_group_row">
+            <input type="reset" value="Cancel" class="btn btn-danger">
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </div>
+        <hr>
+        <div class="form_group">
+            
+            <div>
+                <span>You already have been account?</span>
+                <a asp-controller="Identity" asp-action="Login"> Login Now.</a>
+            </div>
+        </div>
+    </form>
+</section>

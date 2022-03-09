@@ -1,0 +1,103 @@
+
+
+
+/* Blog item style */
+.blog_item {
+    padding: 1.2rem;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    max-width: min(100%, 940px);
+}
+
+.blog_item img {
+    width: 100%;
+    max-height: 350px;
+    object-fit: cover;
+    border: 1px solid #eee;
+}
+
+.blog_item .blog_info {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--primary);
+    padding: 28px calc(.5rem + 2vw) 25px;
+}
+
+.blog_item .authorize {
+    font-size: .8rem;
+    line-height: 1rem;
+    font-weight: 400;
+    display: flex;
+    align-items: space-between;
+    gap: 10px;
+}
+
+.blog_item .authorize .avatar {
+    width: 2rem;
+    height: 2rem;
+    object-fit: cover;
+    border-radius: 100rem;
+    box-shadow: 0 0 2px 1px #302D2D;
+}
+
+.blog_item .authorize .text_author {
+    font-weight: 900;
+    color: var(--primary);
+}
+
+.blog_item .authorize .text_time {
+    text-decoration: underline;
+    color: var(--secondary);
+}
+
+.blog_item .title {
+    font-family: "Poppins", sans-serif;
+    color: var(--green);
+    margin-top: 12px;
+    font-size: calc(16px + .8vw);
+    font-weight: 400;
+}
+
+.blog_item .tags {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    gap: .4rem;
+}
+
+.blog_item .content {
+    font-family: 'Times New Roman', Times, serif;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    overflow-x: auto;
+}
+
+.blog_item .interactive {
+    display: flex;
+    justify-content: space-between;
+    font-size: 21px;
+}
+
+.blog_item .like_count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    color: #333;
+}
+
+.blog_item .like_count .count {
+    font-weight: 500;
+}
+
+.blog_item .like_count .liked {
+    color: var(--red);
+}
+
+.blog_item .detail_link {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+}
+
+/* ------------------------------------------------------- End blog item style */

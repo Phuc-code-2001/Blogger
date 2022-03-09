@@ -1,0 +1,252 @@
+@using BlogWebMVCIdentityAuth.Models.Views
+@using BlogWebMVCIdentityAuth.DataStructures
+@model Author
+@{
+    ViewData["Title"] = "Profile";
+    Author user = Model;
+    String img_url  = user.ImageUrl;
+    String username = user.UserName;
+    String fullname = user.Fullname;
+    String email    = user.Email;
+    String phone    = user.PhoneNumber ?? "Unknown";
+    String gender   = user.GenderText;
+    String birthday = user.Birthday.ToLongDateString();
+    String story    = user.Story ?? "Don't Setup.";
+    String joindate = user.DateJoin.ToLongDateString();
+
+    bool isLoginUser = User.Identity.Name == username;
+
+    PaginatedList<Blog> blogs = (PaginatedList<Blog>) ViewData["Blogs"];
+}
+
+<link rel="stylesheet" href="~/lib/CodingUI.css">
+<link rel="stylesheet" href="~/css/profile/Index.css">
+
+<section class="profile_index">
+
+    <div class="info">
+        <div class="info_top">
+        @if(TempData["RedirectMessage"] != null){
+            AlertMessage Alert = Newtonsoft.Json.JsonConvert.DeserializeObject<AlertMessage>(TempData["RedirectMessage"].ToString());
+            <div class='mb-0 alert alert-@Alert.Type' style="width: 100%; border-radius: 0;">
+                <strong class="text-capitalize">@Alert.Label!</strong>
+                <span>@Alert.Content</span>
+            </div>
+        }
+            <div class="avatar_box">
+                <a href="@img_url" class="img_link" target="_blank">
+                    <img src="@img_url" alt="alt">
+                </a>
+            </div>
+            <div class="info_fields">
+                <h3 class="fullname">@fullname</h1>
+                <h6 class="username">@username</h6>
+                @if(isLoginUser){
+                    <form asp-action="UpdateImage" enctype="multipart/form-data" id="update_image_form">
+                        
+                    </form>
+                    <button class="btn btn-info">
+                        <span id="btn_update_image" title="Update avatar">
+                            <ion-icon name="camera"></ion-icon>
+                        </span>
+                    </button>
+                } else {
+                    <div class="border-top"></div>
+                    @if(User.Identity.IsAuthenticated) {
+                        <button class="btn btn-info btn_follow">
+                            @if(ViewBag.isFollow) {
+
+                                <span id="btn_follow" title="Unfollow">
+                                    <ion-icon name="checkbox-outline"></ion-icon>
+                                </span>
+                            } else {
+
+                                <span id="btn_follow" title="Follow">
+                                    <ion-icon name="duplicate-outline"></ion-icon>
+                                </span>
+                            }
+                        </button>
+                        <script>
+                            $(".btn_follow").click(function(e) {
+                                
+                                $.ajax({
+                                    url: "/Follow/Index",
+                                    data: {UserName: "@username"},
+                                    success: function(data) {
+                                        let btn_follow = document.getElementById("btn_follow");
+                                        if(btn_follow.title == "Follow") {
+                                            btn_follow.innerHTML = `<ion-icon name="checkbox-outline"></ion-icon>`;
+                                            btn_follow.title = "UnFollow";
+                                        }
+                                        else {
+                                            btn_follow.innerHTML = `<ion-icon name="duplicate-outline"></ion-icon>`;
+                                            btn_follow.title = "Follow";
+                                        }
+                                        
+                                        document.getElementById("counter_followers").innerText = data + " " + "followers"
+
+                                    },
+                                    error: function(data) {
+                                        alert(data.message);
+                                    }
+                                })
+                            });
+                        </script>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="info_bottom">
+            <div class="headbox tabs1">
+                <div class="tab-item active" role="introduce">About</div>
+                @if(isLoginUser){
+                    <div class="tab-item" role="personal">Personal Info</div>
+                }
+            </div>
+            <div class="introduce" name="info_box">
+                <div class="story" id="user_story">@story</div>
+                @if(isLoginUser) {
+                    <form class="story" asp-action="UpdateStory" method="POST" id="story_form">
+                        <input type="text" name="text" id="story_control" class="story_control" value="@story">
+                        <div class="btn_cancel_ok" id="cancel_ok_introduce">
+                            <button type="button" class="btn btn-danger" id="btn_cancel_introduce">
+                                <ion-icon name="backspace-outline"></ion-icon>
+                            </button>
+                            <button type="submit" class="btn btn-success" id="btn_ok_introduce">
+                                <ion-icon name="checkmark-outline"></ion-icon>
+                            </button>
+                        </div>
+                    </form>
+                    <button class="btn btn-info" id="btn_update_story">
+                        Update Your Story
+                    </button>
+                }
+                <hr>
+                <div class="field">
+                    <ion-icon class="text-info" name="newspaper-outline"></ion-icon>
+                    <span class="text_count">@ViewData["BlogCounterOfAuthor"] blogs</span>
+                    <ion-icon class="text-danger" name="heart"></ion-icon>
+                    <span class="text_count">@ViewData["LikeCounterOfAuthor"] likes</span>
+                </div>
+                @if(ViewData["MTopic"] != null) {
+
+                    <div class="field">
+                        <ion-icon class="text-info" name="color-palette-outline"></ion-icon>
+                        <span class="text">
+                            @ViewData["MTopic"]
+                        </span>
+                    </div>
+                }
+                <div class="field">
+                    <ion-icon class="text-info" name="radio-outline"></ion-icon>
+                    <span id="counter_followers" class="text_count">@ViewData["FollowCounter"] followers</span>
+                </div>
+                <div class="field">
+                    <ion-icon class="text-info" name="time"></ion-icon>
+                    <span class="text_joindate">Join in @joindate</span>
+                </div>
+            </div>
+            @if(isLoginUser) {
+            <div class="personal" name="info_box">
+                <button class="btn btn-info" id="btn_update_personal">
+                    Update Your Info
+                </button>
+                <div class="btn_cancel_ok" id="cancel_ok_personal">
+                    <button class="btn btn-danger" id="btn_cancel_personal">
+                        <ion-icon name="backspace-outline"></ion-icon>
+                    </button>
+                    <button class="btn btn-success" id="btn_ok_personal">
+                        <ion-icon name="checkmark-outline"></ion-icon>
+                    </button>
+                </div>
+                
+                <form class="field_list" id="update_info_form" asp-action="UpdateInfo">
+                    <div class="field">
+                        <ion-icon class="text-info" class="text-info" name="mail-open-outline"></ion-icon>
+                        <span class="text_editable text_email mx-auto">@email</span>
+
+                        <div class="personal_control_group">
+                            <input type="email" role="email" class="personal_control bg-info" asp-for="Email" readonly style="text-transform: lowercase;">
+                        </div>
+
+                    </div>
+                    <div class="field">
+                        <ion-icon class="text-info" name="call-outline"></ion-icon>
+                        <span class="text_editable mx-auto">@phone</span>
+
+                        <div class="personal_control_group">
+                            <input type="text" role="phone" class="personal_control" placeholder="Enter your phone" asp-for="PhoneNumber">
+                        </div>
+
+                    </div>
+                    <div class="field">
+                        <ion-icon class="text-info" name="people-circle-outline"></ion-icon>
+                        <span class="text_editable mx-auto">@gender</span>
+
+                        <div class="personal_control_group">
+                            <select role="gender" class="personal_control" asp-for="Gender">
+                                <option value="1">Male</option>
+                                <option value="0">Female</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="field">
+                        <ion-icon class="text-info" name="gift-outline"></ion-icon>
+                        <span class="text_editable mx-auto">@birthday</span>
+
+                        <div class="personal_control_group">
+                            <input type="date" role="birthday" class="personal_control" asp-for="Birthday">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            }
+        </div>
+    </div>
+
+    <div class="user_blogs">
+        <div class="title_section">All Posts</div>
+        <div class="line"></div>
+        <div class="list_filter">
+            <div class="blog_list_wrapper">
+                <div class="blog_list">
+                    @if(blogs.Count > 0) {
+
+                        foreach (Blog item in blogs)
+                        {
+                            <partial name="_PreviewBlogItem.cshtml" for="@item"></partial>
+                        }
+                    } else {
+                        <p class="text-danger mx-auto">No have any blogs.</p>
+                    }
+                </div>
+                <partial name="../Shared/_Paginator.cshtml" for="@blogs"></partial>
+            </div>
+            @if(isLoginUser) {
+            <div class="function">
+                    <a asp-controller="Blog" asp-action="Create" class="btn btn-primary">New A Blog</a>
+                    <hr>
+                    @if(isLoginUser) {
+
+                        <div class="px-2">
+                            <p>Following:</p>
+                            <ul class="following_list">
+                                @foreach(Following item in ViewBag.Followings) {
+                                    <li>
+                                        <a class="btn btn-info btn-sm" asp-controller="Profile" asp-action="Index" asp-route-UserName="@item.TargetUserName">@item.TargetUserName</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    }
+            </div>
+            }
+        </div>
+    </div>
+
+    <script src="~/lib/jquery.caret.js"></script>
+    <script src="~/js/profile/Index.js"></script>
+
+</section>

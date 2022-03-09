@@ -1,0 +1,71 @@
+@{
+    ViewData["Title"] = "Login";
+}
+
+@model LoginViewModel
+
+<link rel="stylesheet" href="~/css/home/Login.css">
+<link rel="stylesheet" href="~/lib/CodingUI.css">
+
+<section class="login">
+    <form method="POST" class="login_form">
+        @if(TempData.ContainsKey("SuccessMessage")) {
+            <div style="font-family: 'Times New Roman', Times, serif;">
+                <b class="d-block text-success">@TempData["SuccessMessage"]</b>
+            </div>
+            <hr>
+        }
+        <h2 class="form_title">Login</h2>
+        <hr>
+        @if(TempData.ContainsKey("ErrorMessage")) {
+            <div style="font-family: 'Times New Roman', Times, serif;">
+                <b class="d-block text-danger">@TempData["ErrorMessage"]</b>
+            </div>
+            <hr>
+        }
+        <div class="text-field_login">
+            <label asp-for="Username"></label>
+            <input type="text" asp-for="Username" class="form_control" placeholder="Enter your username">
+            <span asp-validation-for="Username" class="label-item danger"></span>
+        </div>
+        <br>
+        <div class="text-field_login">
+            <label asp-for="Password"></label>
+            <input type="password" asp-for="Password" class="form_control" placeholder="Enter your password">
+            <span asp-validation-for="Password" class="label-item danger"></span>
+        </div>
+        <br>
+        <div class="form_group_row">
+            <input type="reset" value="Cancel" class="btn btn-danger">
+            <input type="submit" value="Login" class="btn btn-primary">
+        </div>
+        <hr>
+        <div class="form_group">
+            <a href="" role="reset_password">Forgot password?</a>
+            <div>
+                <span>If you need an account?</span>
+                <a asp-controller="Identity" asp-action="Register">Register Now.</a>
+            </div>
+        </div>
+    </form>
+</section>
+
+<script src="~/lib/sweetAlert2.js"></script>
+<script>
+    $("a[role='reset_password']").click((e) => {
+        e.preventDefault();
+        
+        Swal.fire({
+            title: 'Not supported!',
+            text: ' Calm down, and try to remember your password. Thank you!',
+            icon: 'info',
+            confirmButtonText: 'Ok',
+            footer: `
+                <div>
+                    <span>If you need a new account?</span>
+                    <a href="/Register">Register Now.</a>
+                </div>
+            `
+        });
+    })
+</script>

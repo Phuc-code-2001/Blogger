@@ -1,0 +1,40 @@
+@using BlogWebMVCIdentityAuth.DataStructures
+
+@model PaginatedList<Blog>
+
+@if (Model.HasNextPage || Model.HasPreviousPage)
+{
+    <div class="paginator">
+        <a href="?page=1" class="btn btn-secondary">
+            <ion-icon name="play-back"></ion-icon>
+        </a>
+        @if(Model.HasPreviousPage) {
+            int previousIndex = Model.PageIndex - 1;
+            <a href="?page=@previousIndex" class="btn">@previousIndex</a>
+        }
+        <a href="?page=@Model.PageIndex" class="btn btn-primary">@Model.PageIndex</a>
+        @if (Model.HasNextPage)
+        {
+            int nextIndex = Model.PageIndex + 1;
+            <a href="?page=@nextIndex" class="btn">@nextIndex</a>
+        }
+        <a href="?page=@Model.TotalPages" class="btn btn-secondary">
+            <ion-icon name="play-forward"></ion-icon>
+        </a>
+        <script>
+            $(".paginator a").click(function(e) {
+                e.preventDefault();
+                console.log(window.location.search);
+                let pManager = new URLSearchParams(window.location.search);
+                let pageIndex = new URLSearchParams(this.href.split('?')[1]).get('page');
+
+                pManager.set('page', pageIndex);
+
+                let finalURL = window.location.origin +  window.location.pathname + "?" + pManager.toString();
+                
+                window.location.href = finalURL;
+
+            });
+        </script>
+    </div>
+}

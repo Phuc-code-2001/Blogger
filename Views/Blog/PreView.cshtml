@@ -1,0 +1,15 @@
+@{
+    ViewData["Title"] = "PreView";
+}
+
+<div class="container" id="box">
+    
+</div>
+
+<input type="hidden" name="content" value="@ViewBag.Content">
+
+<script>
+    $(document).ready(() => {
+        document.getElementById("box").innerHTML = $("input[name='content']").val();
+    })
+</script>

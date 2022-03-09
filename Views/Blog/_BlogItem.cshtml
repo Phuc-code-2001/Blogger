@@ -1,0 +1,77 @@
+
+@model Blog
+
+@if(Model != null) {
+
+    <div class="blog_item">
+        <img src="@Model.ImageURL" alt="nature">
+        <div class="blog_info">
+            <div class="authorize">
+                <img src="https://images.unsplash.com/photo-1592452738030-cf604328ddf7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="default" class="avatar">
+                <div class="text_group">
+                    <div class="text_author">
+                        <a asp-controller="Profile" asp-action="Index" asp-route-UserName="@Model.AuthorUserName" class="text-decoration-none">@Model.AuthorUserName</a>
+                    </div>
+                    <div class="text_time">@Model.DateTimeOfPublic.ToLongDateString()</div>
+                </div>
+            </div>
+            <div class="title">@Model.Title</div>
+            <div class="tags">
+                <ion-icon name="pricetag-outline"></ion-icon>
+                <span class="text-muted">@Model.HashTag</span>
+            </div>
+            <hr>
+            <div class="content" id="blog_content_@Model.Id">
+                
+            </div>
+            <input type="hidden" class="blog_content" name="blog_content_@Model.Id" value="@Model.Content">
+
+            <p style="border-bottom: 1px solid #333;"></p>
+            <div class="interactive">
+                @if(User.Identity.IsAuthenticated) {
+            
+                    <a href="/Like/Index?blog_id=@Model.Id" class="like_count like_btn text-decoration-none">
+                        <span class="count" id="counter">@Model.Likes.Count</span>
+                        @if((bool) ViewBag.isLike){
+                            <ion-icon id="like-icon" class="liked" name="heart"></ion-icon>
+                        } else {
+                            <ion-icon id="like-icon" name="heart-outline"></ion-icon>
+                        }
+                    </a>
+
+                    <script>
+                        $(".like_btn").click((e) => {
+                            e.preventDefault();
+                            
+                            let url     = e.target.href;
+                            let counter = document.getElementById('counter');
+                            let icon    = document.getElementById('like-icon');
+                            $.ajax({
+                                url: url,
+                                success: function(data) {
+                                    console.log(data)
+                                    counter.innerText = data.currentLikeCounter;
+                                    $(icon).toggleClass('liked');
+                                    if(data.operationType == 'Like')
+                                        $(icon).attr('name', 'heart');
+                                    else
+                                        $(icon).attr('name', 'heart-outline');
+
+                                },
+                                error: function(data) {
+                                    console.error(data)
+                                }
+                            })
+                        });
+                    </script>
+                } else {
+                    <span class="like_count text-decoration-none">
+                        <span class="count">@Model.Likes.Count</span>
+                        <ion-icon class="liked" name="heart"></ion-icon>
+                    </span>
+                }
+            </div>
+        </div>
+    </div>
+}
+

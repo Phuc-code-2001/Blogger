@@ -1,0 +1,107 @@
+@{
+    ViewData["Title"] = "Create";
+}
+
+@model Blog
+
+<link rel="stylesheet" href="~/lib/fa-all.min.css">
+<link rel="stylesheet" href="~/css/blogs/Create.css">
+
+<div id="Ctoast">
+
+</div>
+
+<section class="blog_create container">
+
+    <div class="design">
+        <div class="sub_title text-primary">Your Design</div>
+        <form asp-controller="Blog" asp-action="Create" method="post" enctype="multipart/form-data" autocomplete="off">
+
+            
+            <textarea asp-for="Content"></textarea>
+            
+            <div class="form_group">
+                <label for="">Author: </label>
+                <input type="text" asp-for="AuthorUserName" class="form-control" value="@User.Identity.Name" readonly>
+            </div>
+
+            <div class="form_group">
+                <label for="TopicId">Topic: </label>
+                <select asp-for="TopicId" asp-items="ViewBag.TopicList" class="form-control"></select>
+            </div>
+            
+            <div class="form_group">
+                <label for="HashTag">HashTag: </label>
+                <input type="text" asp-for="HashTag" class="form-control">
+            </div>
+            <div class="form_group">
+                <label for="">Image Representation: </label>
+                <input type="file" name="ImageFileRaw" class="" accept=".jpg, .jpeg, .png, .gif">
+            </div>
+            <div class="form_group">
+                <label for="Title">Title: </label>
+                <input type="text" asp-for="Title" class="form-control">
+            </div>
+
+            <div class="form_group">
+                <button type="submit" class="btn btn-success ml-auto">POST</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="preview">
+        <div class="sub_title text-success">Preview</div>
+        <div id="preview">
+
+        </div>
+    </div>
+
+</section>
+
+@section Scripts {
+    <script src="//cdn.ckeditor.com/4.17.1/full/ckeditor.js"></script>
+    <script>
+
+
+        $(document).ready(() => {
+            
+            let editor = CKEDITOR.replace("Content", {
+                customConfig: '/lib/editorConfigure.js',
+                height: 600,
+                baseFloatZIndex: 10005,
+                
+            });
+
+            document.getElementById("preview").innerHTML = editor.getData();
+            
+            
+            // The "change" event is fired whenever a change is made in the editor.
+            editor.on( "change", function(evt) {
+                // getData() returns CKEditor's HTML content.
+                let content = evt.editor.getData();
+                document.getElementById("preview").innerHTML = content;
+            });
+
+
+        });
+
+    </script>
+    @if(ViewBag.Errors != null) {
+        <script src="~/lib/sweetAlert2.js"></script>
+        @foreach (String message in ViewBag.Errors)
+        {
+
+            <script>
+
+                Swal.fire({
+                    title: 'Invalid Fields!',
+                    text: '@message',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+                
+            </script>
+        }
+    }
+}

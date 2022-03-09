@@ -1,0 +1,26 @@
+@using BlogWebMVCIdentityAuth.DataStructures
+@{
+    ViewData["Title"] = "Search";
+}
+@model PaginatedList<Blog>
+<link rel="stylesheet" href="~/css/blogs/Search.css">
+
+<div class="container">
+
+    <h3 class="search_title">Result for "@ViewData["Keyword"]"</h3>
+    <div class="search_result">
+        @if(Model.Count() == 0) {
+            <p class="text_notfound">We can not find any blog matched.</p>
+        } else {
+            foreach(Blog item in Model) {
+                <partial name="../Profile/_PreviewBlogItem.cshtml" for="@item"></partial>
+            }
+            
+        }
+
+    </div>
+    <div class="text-center mb-3">
+
+        <partial name="../Shared/_Paginator.cshtml" for="@Model"></partial>
+    </div>
+</div>

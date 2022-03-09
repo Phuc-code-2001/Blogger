@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "ListByTopic";
+}
+
+@model Topic
+
+<link rel="stylesheet" href="~/css/blogs/ListByTopic.css">
+
+<div class="list_by_topic">
+
+    <div class="banner">
+        <div class="banner_maintext">
+            <span>@Model.Name</span>
+            <div class="banner_helptext">Lorem ipsum dolor sit amet consectetur adipisicing elit</div>
+        </div>
+        <img src="@Model.ImageURL" class="banner_image" alt="banner">
+    </div>
+
+    <div class="blog_list">
+        @foreach (Blog item in Model.Blogs)
+        {
+            <partial name="../Profile/_PreviewBlogItem.cshtml" for="@item"></partial>
+        }
+    </div>
+</div>

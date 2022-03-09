@@ -1,0 +1,136 @@
+@import url("./_SlideItem.css");
+@import url("./_TopicItem.css");
+@import url("../profile/_PreviewBlogItem.css");
+@import url("../paginator.css");
+
+
+.create_search {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.search, .create {
+    flex: 1;
+    min-width: min(100%, 450px);
+}
+
+/* Style for create area */
+
+.create .create_board {
+    display: block;
+    background-color: #fff;
+    border-radius: 5px;
+    max-width: 450px;
+    margin: auto;
+    padding: 1rem;
+}
+
+.create .create_board .question {
+    font-size: 1.2rem;
+    font-family: "playfair display", sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--primary);
+}
+
+.create .question ._icon {
+    font-size: 2rem;
+    background-color: var(--primary);
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.create .topic_create_options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1rem;
+}
+
+.create .topic_create_options ._link {
+    color: #ffffff;
+    background-color: var(--teal);
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+
+/* ---------------- End Style for create area */
+
+/* Style for search area */
+.search .by_options {
+    flex: 1;
+    padding: 5px .5rem;
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
+.option_item {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    margin: 0 .5rem;
+}
+
+/* ----------------- End Style for search area */
+
+.topic_list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 1rem;
+    padding: 2rem 0;
+}
+
+.topic_list > * {
+    min-width: fit-content;
+}
+
+.title_section {
+    font-size: 28px;
+    border-bottom: 5px solid #2cccff;
+    padding: 10px 5px 5px;
+    font-family: "playfair display", sans-serif;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* Style for Blog List */
+.blog_list {
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.topic_blog_item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+    max-width: 100%;
+}
+
+.blog_list .topic {
+    position: absolute;
+    z-index: 1;
+    transform: translateY(calc(-100% + 11px));
+    padding: 4px 12px;
+    text-align: center;
+    background-color: #ffffff;
+    border: 2px double #2cccff;
+    color: var(--cyan);
+    font-weight: 600;
+}
+
+/* override */
+
+.blog_item .img_box img {
+    height: 350px;
+}

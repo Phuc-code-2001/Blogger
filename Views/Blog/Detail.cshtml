@@ -1,0 +1,26 @@
+@model Blog
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<link rel="stylesheet" href="~/css/blogs/_BlogItem.css">
+<link rel="stylesheet" href="~/css/blogs/Detail.css">
+
+<div class="d_container">
+    
+    <div class="d_control">
+        <a asp-action="Previous" asp-route-blog_id="@Model.Id" class="btn btn-primary">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+        </a>
+        <a asp-action="Next" asp-route-blog_id="@Model.Id" class="btn btn-primary">
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+        </a>
+    </div>
+    
+    <partial name="_BlogItem.cshtml" for="@Model"></partial>
+</div>
+
+<script>
+    $('.d_control').hide();
+</script>

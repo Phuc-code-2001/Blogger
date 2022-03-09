@@ -1,0 +1,26 @@
+
+.carousel-item img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+.carousel-caption {
+    background-color: #ffffffee;
+    width: min(fit-content, 100%);
+    padding: 15px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transform: translateY(-2rem);
+}
+
+.short_description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    line-clamp: 2; 
+    -webkit-box-orient: vertical;
+}

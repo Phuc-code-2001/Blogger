@@ -1,0 +1,18 @@
+.paginator {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem 1rem;
+}
+
+.paginator a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+}
+
+.paginator a:hover {
+    border: 2px solid var(--primary);
+    text-decoration: none;
+}

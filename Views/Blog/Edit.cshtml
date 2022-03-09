@@ -1,0 +1,140 @@
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@model Blog
+
+<link rel="stylesheet" href="~/css/blogs/Create.css">
+
+<section class="blog_create container">
+
+    <div class="design">
+        <div class="sub_title text-primary">Your Design</div>
+        <form asp-controller="Blog" asp-action="Edit" method="post" enctype="multipart/form-data" autocomplete="off">
+
+            <input type="hidden" asp-for="Id">
+            <input type="hidden" asp-for="ImageURL">
+            <input type="hidden" asp-for="DateTimeOfPublic">
+
+            <textarea asp-for="Content"></textarea>
+
+            <div class="form_group">
+                <label for="">Author: </label>
+                <input type="text" asp-for="AuthorUserName" class="form-control" value="@User.Identity.Name" readonly>
+            </div>
+
+            <div class="form_group">
+                <label for="TopicId">Topic: </label>
+                <select asp-for="TopicId" asp-items="ViewBag.TopicList" class="form-control"></select>
+            </div>
+            
+            <div class="form_group">
+                <label for="HashTag">HashTag: </label>
+                <input type="text" asp-for="HashTag" class="form-control">
+            </div>
+            <div class="form_group">
+                <label for="">New Image (Optional): </label>
+                <input type="file" name="ImageFileRaw" class="" accept=".jpg, .jpeg, .png, .gif">
+            </div>
+            <div class="form_group">
+                <label for="Title">Title: </label>
+                <input type="text" asp-for="Title" class="form-control">
+            </div>
+
+            <div class="form_group">
+                <button type="submit" class="btn btn-success ml-auto">POST</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="preview">
+        <div class="sub_title text-success">Preview</div>
+        <div id="preview">
+
+        </div>
+    </div>
+
+    <a id="btn-delete" asp-controller="Blog" asp-action="Delete" asp-route-blog_id=@Model.Id class="btn btn-danger d-flex align-items-center justify-content-center">
+        <ion-icon name="trash-outline"></ion-icon>
+    </a>
+
+</section>
+
+@section Scripts {
+    <script src="//cdn.ckeditor.com/4.17.1/full/ckeditor.js"></script>
+    <script src="~/lib/sweetAlert2.js"></script>
+    @if(ViewBag.Errors != null) {
+        
+        @foreach (String message in ViewBag.Errors)
+        {
+            <script>
+
+                Swal.fire({
+                    title: 'Invalid Fields!',
+                    text: '@message',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                });
+                
+            </script>
+        }
+    }
+    <script>
+
+        $(document).ready(() => {
+            
+            let editor = CKEDITOR.replace("Content", {
+                customConfig: '/lib/editorConfigure.js',
+                height: 600,
+                baseFloatZIndex: 10005,
+                
+            });
+
+            document.getElementById("preview").innerHTML = editor.getData();
+            
+            
+            // The "change" event is fired whenever a change is made in the editor.
+            editor.on( "change", function(evt) {
+                // getData() returns CKEditor's HTML content.
+                let content = evt.editor.getData();
+                document.getElementById("preview").innerHTML = content;
+            });
+
+            $("#btn-delete").click((e) => {
+
+                e.preventDefault();
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                })
+                .then((result) => {
+
+                    if(result.isConfirmed) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Your post has been deleted.',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            willClose: () => {
+                                window.location.href = e.target.href;
+                            }
+                            
+                        });
+                        
+                        
+                    };
+
+                });
+
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,97 @@
+@using BlogWebMVCIdentityAuth.DataStructures
+@{
+    ViewData["Title"] = "Blogs";
+    List<Topic> TopicList = (List<Topic>) ViewData["TopicList"];
+
+    PaginatedList<Blog> BlogsRecommended = (PaginatedList<Blog>) ViewData["Recommended"];
+}
+
+<link rel="stylesheet" href="~/css/blogs/Index.css">
+
+<div class="blog_index">
+
+    <partial name="_SlideShowTopics" for='@ViewData["TopicList"]'></partial>
+    <br>
+    <div class="container">
+        <div class="create_search">
+            <div class="create">
+                <div class="title_section">Create</div>
+                <br>
+                <div class="create_board">
+                    <div class="question">
+                        <div class="_icon">
+                            <ion-icon name="newspaper-outline"></ion-icon>
+                        </div>
+                        <span class="text-primary">Do you want to create a blog?</span>
+                    </div>
+                    <hr>
+                    <div class="topic_create_options">
+                        @foreach (Topic item in TopicList) {
+                            <a asp-action="Create" asp-route-topic_id="@item.Id" class="_link text-decoration-none">@item.Name</a>
+                        }
+                    </div>
+                </div>
+            </div>
+            <form asp-action="Search" class="search" method="GET" autocomplete="off">
+                <div class="title_section">Search</div>
+                <div class="form-group">
+                    <br>
+                    <input type="text" name="keyword" class="form-control" placeholder="Enter your keyword">
+                </div>
+                <div class="form-group">
+                    <span class="px-2">Search by:</span>
+                    <div class="by_options">
+                        
+                        <div class="option_item">
+                            <input type="checkbox" name="search_by" value="author" checked>
+                            <span>Author</span>
+                        </div>
+                        <div class="option_item">
+                            <input type="checkbox" name="search_by" value="title" checked>
+                            <span>Title</span>
+                        </div>
+                        <div class="option_item">
+                            <input type="checkbox" name="search_by" value="hashtag" checked>
+                            <span>Hashtag</span>
+                        </div>
+                        <div class="option_item">
+                            <input type="checkbox" name="search_by" value="content" checked>
+                            <span>Content</span>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="form-group text-right">
+                    <button class="btn btn-success">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="title_section">All Topics</div>
+        <div class="topic_list">
+            @foreach (Topic item in TopicList)
+            {
+                <partial name="_TopicItem.cshtml" for="@item"></partial>
+            }
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="title_section">Recommended</div>
+        <div class="blog_list">
+            @foreach (Blog item in BlogsRecommended)
+            {
+                
+                <div class="topic_blog_item">
+                    <partial name="../Profile/_PreviewBlogItem.cshtml" for="@item"></partial>
+                </div>
+            }
+           
+            <partial name="../Shared/_Paginator.cshtml" for="@BlogsRecommended"></partial>
+            
+        </div>
+    </div>
+    
+</div>
