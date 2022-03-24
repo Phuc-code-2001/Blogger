@@ -228,7 +228,7 @@
             <div class="function">
                     <a asp-controller="Blog" asp-action="Create" class="btn btn-primary">New A Blog</a>
                     <hr>
-                    @if(isLoginUser) {
+                    @if(isLoginUser && ViewBag.Followings != null) {
 
                         <div class="px-2">
                             <p>Following:</p>

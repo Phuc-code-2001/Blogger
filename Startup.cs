@@ -40,9 +40,11 @@ namespace BlogWebMVCIdentityAuth
             });
 
             services.AddDbContext<ApplicationDbContext>(options => {
-                string ConnectionString = Configuration.GetConnectionString("BlogerConnection");
-                // options.UseSqlite(ConnectionString);
-                options.UseSqlServer(ConnectionString);
+                // string SQLServerConnectString = Configuration.GetConnectionString("BlogerConnection");
+                // options.UseSqlServer(SQLServerConnectString);
+                
+                string LocalSQLiteConnectString = Configuration.GetConnectionString("DefaultConnection");
+                options.UseSqlite(LocalSQLiteConnectString);
 
             });
             services.AddDatabaseDeveloperPageExceptionFilter();
