@@ -454,6 +454,3 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 Migrations
-/wwwroot/media/BlogPhotos
-/app.db
-/wwwroot/media/users/phuchtce150394
